@@ -1,0 +1,34 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.0.32112.339
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Projekt.Models", "AvanceradDOTNET_Projekt\Projekt.Models.csproj", "{DFEBBF02-B46F-4EA2-890E-D3077E64CEB4}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Projekt.API", "Projekt.API\Projekt.API.csproj", "{A7E7E564-7160-49A7-A9D0-CAC65E56A144}"
+	ProjectSection(ProjectDependencies) = postProject
+		{DFEBBF02-B46F-4EA2-890E-D3077E64CEB4} = {DFEBBF02-B46F-4EA2-890E-D3077E64CEB4}
+	EndProjectSection
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{DFEBBF02-B46F-4EA2-890E-D3077E64CEB4}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{DFEBBF02-B46F-4EA2-890E-D3077E64CEB4}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{DFEBBF02-B46F-4EA2-890E-D3077E64CEB4}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{DFEBBF02-B46F-4EA2-890E-D3077E64CEB4}.Release|Any CPU.Build.0 = Release|Any CPU
+		{A7E7E564-7160-49A7-A9D0-CAC65E56A144}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{A7E7E564-7160-49A7-A9D0-CAC65E56A144}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{A7E7E564-7160-49A7-A9D0-CAC65E56A144}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{A7E7E564-7160-49A7-A9D0-CAC65E56A144}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {964C6063-05E6-48B6-BE8A-136124274FF7}
+	EndGlobalSection
+EndGlobal
