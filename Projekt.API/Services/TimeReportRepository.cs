@@ -1,4 +1,6 @@
 ﻿using AvanceradDOTNET_Projekt.Models;
+using Microsoft.EntityFrameworkCore;
+using Projekt.API.Model;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 
@@ -6,14 +8,27 @@ namespace Projekt.API.Services
 {
     public class TimeReportRepository : IRestAPI<TimeReport>
     {
-        public Task<TimeReport> AddAsync(TimeReport item)
+        ProjectDbContext _context;
+        public TimeReportRepository(ProjectDbContext context)
         {
-            throw new System.NotImplementedException();
+            _context = context;
+        }
+        public async Task<TimeReport> AddAsync(TimeReport item)
+        {
+            var result =  await _context.TimeReports.AddAsync(item);
+            return result.Entity;
         }
 
-        public Task<TimeReport> DeleteAsync(int id)
+        public async Task<TimeReport> DeleteAsync(int id)
         {
-            throw new System.NotImplementedException();
+            var toDelete = await _context.TimeReports.FirstOrDefaultAsync(t => t.Id == id);
+            if(toDelete != null)
+            {
+                var result = _context.TimeReports.Remove(toDelete);
+                await _context.SaveChangesAsync();
+                return result.Entity;
+            }
+            return null;
         }
 
         public Task<IEnumerable<TimeReport>> GetAllAsync()
@@ -26,9 +41,19 @@ namespace Projekt.API.Services
             throw new System.NotImplementedException();
         }
 
-        public Task<TimeReport> UpdateAsync(TimeReport item)
+        public async Task<TimeReport> UpdateAsync(TimeReport item)
         {
-            throw new System.NotImplementedException();
+            var toUpdate = await _context.TimeReports.FirstOrDefaultAsync(t => t.Id == item.Id);
+            if(toUpdate != null)
+            {
+                toUpdate.Date = item.Date;
+                toUpdate.HoursWorked = item.HoursWorked;
+                toUpdate.EmployeeId = item.EmployeeId;
+                toUpdate.ProjectId = item.ProjectId;
+                await _context.SaveChangesAsync();
+                return toUpdate;
+            }
+            return null;
         }
     }
 }

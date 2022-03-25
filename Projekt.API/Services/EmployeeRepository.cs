@@ -4,7 +4,6 @@ using System.Threading.Tasks;
 
 namespace Projekt.API.Services
 {
-    //TODO Getall employees
     public class EmployeeRepository : IRestAPI<Employee>
     {
         public Task<Employee> AddAsync(Employee item)

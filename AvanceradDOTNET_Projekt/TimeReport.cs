@@ -18,8 +18,10 @@ namespace AvanceradDOTNET_Projekt.Models
         [Required]
         public double HoursWorked { get; set; }
         [Required]
+        public int EmployeeId { get; set; }
         public Employee Employee { get; set; }
         [Required]
+        public int ProjectId { get; set; }
         public Project Project { get; set; }
     }
 }
