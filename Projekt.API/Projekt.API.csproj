@@ -5,6 +5,7 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <PackageReference Include="Microsoft.AspNetCore.Mvc.NewtonsoftJson" Version="3.1.23" />
     <PackageReference Include="Microsoft.EntityFrameworkCore" Version="3.1.23" />
     <PackageReference Include="Microsoft.EntityFrameworkCore.Design" Version="3.1.23">
       <PrivateAssets>all</PrivateAssets>
@@ -19,6 +20,10 @@
 
   <ItemGroup>
     <ProjectReference Include="..\AvanceradDOTNET_Projekt\Projekt.Models.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Folder Include="ViewModel\" />
   </ItemGroup>
 
 

@@ -1,19 +1,36 @@
 ﻿using AvanceradDOTNET_Projekt.Models;
+using Microsoft.EntityFrameworkCore;
+using Projekt.API.Model;
 using System.Collections.Generic;
+using System.Linq;
 using System.Threading.Tasks;
 
 namespace Projekt.API.Services
 {
-    public class ProjectRepository : IRestAPI<Project>
+    public class ProjectRepository : IProject
     {
-        public Task<Project> AddAsync(Project item)
+        ProjectDbContext _context;
+        public ProjectRepository(ProjectDbContext context)
         {
-            throw new System.NotImplementedException();
+            _context = context;
+        }
+        public async Task<Project> AddAsync(Project item)
+        {
+            var result = await _context.Projects.AddAsync(item);
+            await _context.SaveChangesAsync();
+            return result.Entity;
         }
 
-        public Task<Project> DeleteAsync(int id)
+        public async Task<Project> DeleteAsync(int id)
         {
-            throw new System.NotImplementedException();
+            var toDelete = await _context.Projects.FirstOrDefaultAsync(prop => prop.Id == id);
+            if(toDelete != null)
+            {
+                var result = _context.Projects.Remove(toDelete);
+                await _context.SaveChangesAsync();
+                return result.Entity;
+            }
+            return null;
         }
 
         public Task<IEnumerable<Project>> GetAllAsync()
@@ -21,14 +38,30 @@ namespace Projekt.API.Services
             throw new System.NotImplementedException();
         }
 
-        public Task<Project> GetSingleAsync(int id)
+        public async Task<IEnumerable<Employee>> GetEmployeesInProjectAsync(int id)
         {
-            throw new System.NotImplementedException();
+            //var result = await _context.Projects.Include(t => t.TimeReports).ThenInclude(e => e.Employee).Distinct().Where(p => p.Id == id).ToListAsync();
+            var result = await _context.Projects.Join(_context.TimeReports, p => p.Id, t => t.ProjectId,
+                (p, t) => new { p, t }).Where(p => p.p.Id == id).Select(e => e.t.Employee).Distinct().ToListAsync();
+            return result;
         }
 
-        public Task<Project> UpdateAsync(Project item)
+        public async Task<Project> GetSingleAsync(int id)
         {
-            throw new System.NotImplementedException();
+            return await _context.Projects.FirstOrDefaultAsync(p => p.Id == id);
+        }
+
+        public async Task<Project> UpdateAsync(Project item)
+        {
+            var toUpdate = await _context.Projects.FirstOrDefaultAsync(p => p.Id == item.Id);
+            if(toUpdate != null)
+            {
+                toUpdate.ProjectName = item.ProjectName;
+                toUpdate.ProjectNumber = item.ProjectNumber;
+                await _context.SaveChangesAsync();
+                return toUpdate;
+            }
+            return null;
         }
     }
 }

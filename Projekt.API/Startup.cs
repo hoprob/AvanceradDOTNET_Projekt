@@ -1,3 +1,4 @@
+using AvanceradDOTNET_Projekt.Models;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.HttpsPolicy;
@@ -8,6 +9,7 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
 using Projekt.API.Model;
+using Projekt.API.Services;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -27,10 +29,14 @@ namespace Projekt.API
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
-            services.AddControllers();
+            services.AddControllers().AddNewtonsoftJson(options =>
+            options.SerializerSettings.ReferenceLoopHandling = Newtonsoft.Json.ReferenceLoopHandling.Ignore);
 
             services.AddDbContext<ProjectDbContext>(options =>
             options.UseSqlServer(Configuration.GetConnectionString("Connection")));
+
+            services.AddScoped<IRestAPI<TimeReport>, TimeReportRepository>();
+            services.AddScoped<IProject, ProjectRepository>();
 
 
         }

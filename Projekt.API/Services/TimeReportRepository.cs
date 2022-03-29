@@ -16,6 +16,7 @@ namespace Projekt.API.Services
         public async Task<TimeReport> AddAsync(TimeReport item)
         {
             var result =  await _context.TimeReports.AddAsync(item);
+            await _context.SaveChangesAsync();
             return result.Entity;
         }
 
@@ -36,9 +37,9 @@ namespace Projekt.API.Services
             throw new System.NotImplementedException();
         }
 
-        public Task<TimeReport> GetSingleAsync(int id)
+        public async Task<TimeReport> GetSingleAsync(int id)
         {
-            throw new System.NotImplementedException();
+            return await _context.TimeReports.FirstOrDefaultAsync(t => t.Id == id);
         }
 
         public async Task<TimeReport> UpdateAsync(TimeReport item)
