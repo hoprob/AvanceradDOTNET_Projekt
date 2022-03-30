@@ -44,17 +44,15 @@ namespace Projekt.API.Services
             return await _context.Employees.FirstOrDefaultAsync(e => e.Id == id);
         }
 
-        public async Task<IEnumerable<TimeReport>> GetTimeReportsByEmployeeAsync(int id)
-        {
-            var timeReports = await _context.TimeReports.Where(e => e.Id == id).ToListAsync();
-            return timeReports;
+        public async Task<Employee> GetTimeReportsByEmployeeAsync(int id)
+        {          
+            return await _context.Employees.Include(t => t.TimeReports).FirstOrDefaultAsync(e => e.Id == id);
         }
 
-        public async Task<double> HoursWorkedByWeekAsync(int id, int week)
+        public async Task<double> HoursWorkedByWeekAsync(int id, int year, int week)
         {
-            double hours = 0;
-            await _context.TimeReports.Where(x => x.EmployeeId == id && x.Week == week).ForEachAsync((x) => { hours += x.HoursWorked; });
-            return hours;
+            var timeReports = await _context.TimeReports.Where(x => x.EmployeeId == id && x.Date.Year == year).ToListAsync();
+            return timeReports.Where(w => w.Week == week).Sum(h => h.HoursWorked);
         }
 
         public async Task<Employee> UpdateAsync(Employee item)

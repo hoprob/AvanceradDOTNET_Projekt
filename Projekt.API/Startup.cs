@@ -37,6 +37,7 @@ namespace Projekt.API
 
             services.AddScoped<IRestAPI<TimeReport>, TimeReportRepository>();
             services.AddScoped<IProject, ProjectRepository>();
+            services.AddScoped<IEmployee, EmployeeRepository>();
 
 
         }

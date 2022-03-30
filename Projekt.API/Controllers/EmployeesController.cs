@@ -53,14 +53,11 @@ namespace Projekt.API.Controllers
         {
             try
             {
-                var inDb = await GetEmployee(id);
+                var inDb = await _employees.GetSingleAsync(id);
                 if(inDb != null)
                 {
                     var result = await _employees.GetTimeReportsByEmployeeAsync(id);
-                    if (result != null && result.Any())
-                    {
-                        return Ok(result);
-                    }
+                    return Ok(result);
                 }
                 return NotFound($"Employee with id: {id} was not found in database!");
                 
@@ -71,17 +68,17 @@ namespace Projekt.API.Controllers
             }
         }
         [HttpGet]
-        [Route("{id}/week")]
-        public async Task<ActionResult<int>> GetHoursWorkedByWeek(int id, int week)
+        [Route("{id}/hoursworked")]
+        public async Task<ActionResult<int>> GetHoursWorkedByWeek(int id, int year, int week)
         {
             try
             {
                 if(week >= 1 && week <= 52)
                 {
-                    var inDb = await GetEmployee(id);
+                    var inDb = await _employees.GetSingleAsync(id);
                     if (inDb != null)
                     {
-                        return Ok(await _employees.HoursWorkedByWeekAsync(id, week));
+                        return Ok(await _employees.HoursWorkedByWeekAsync(id, year, week));
                     }
                     return NotFound($"Employee with id: {id} was not found in database!");
                 }
@@ -97,12 +94,50 @@ namespace Projekt.API.Controllers
         {
             try
             {
-                if(employee == null)
+                if(employee != null)
                 {
                     var result = await _employees.AddAsync(employee);
                     return CreatedAtAction(nameof(GetEmployee), new { id = result.Id }, result);
                 }
                 return BadRequest();
+            }
+            catch (Exception)
+            {
+                return StatusCode(StatusCodes.Status500InternalServerError, "Error connecting to database!");
+            }
+        }
+        [HttpPut("{id}")]
+        public async Task<ActionResult<Employee>> UpdateEmployee(int id, Employee employee)
+        {
+            try
+            {
+                if(id == employee.Id)
+                {
+                    var result = await _employees.UpdateAsync(employee);
+                    if(result != null)
+                    {
+                        return Ok(result);
+                    }
+                    return NotFound($"Employee with id: {id} was not found in database!");
+                }
+                return BadRequest("The id:s in URL and body does not match!");
+            }
+            catch (Exception)
+            {
+                return StatusCode(StatusCodes.Status500InternalServerError, "Error connecting to database!");
+            }
+        }
+        [HttpDelete("{id}")]
+        public async Task<ActionResult<Employee>> DeleteEmployee(int id)
+        {
+            try
+            {
+                var result = await _employees.DeleteAsync(id);
+                if(result != null)
+                {
+                    return NoContent();
+                }
+                return NotFound($"Employee with id: {id} was not found in database!");
             }
             catch (Exception)
             {

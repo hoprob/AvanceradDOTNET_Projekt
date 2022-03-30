@@ -6,7 +6,7 @@ namespace Projekt.API.Services
 {
     public interface IEmployee :IRestAPI<Employee>
     {
-        public Task<double> HoursWorkedByWeekAsync(int id, int week);
-        public Task<IEnumerable<TimeReport>> GetTimeReportsByEmployeeAsync(int id);
+        public Task<double> HoursWorkedByWeekAsync(int id, int year, int week);
+        public Task<Employee> GetTimeReportsByEmployeeAsync(int id);
     }
 }

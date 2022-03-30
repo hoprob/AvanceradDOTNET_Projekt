@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Globalization;
 using System.Text;
+using System.Text.Json.Serialization;
 
 namespace AvanceradDOTNET_Projekt.Models
 {
@@ -19,6 +20,7 @@ namespace AvanceradDOTNET_Projekt.Models
         public double HoursWorked { get; set; }
         [Required]
         public int EmployeeId { get; set; }
+        [JsonIgnore]
         public Employee Employee { get; set; }
         [Required]
         public int ProjectId { get; set; }
