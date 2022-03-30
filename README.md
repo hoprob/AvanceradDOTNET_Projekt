@@ -1,5 +1,5 @@
 # AvanceradDOTNET_Projekt
-##About
+## About
 This is the final project in a course i'm taking that's called Advanced .NET. The purpose of this project is to build a Web-API and a database so that we can use it in our next course in Webdevelopement as the Backend part.
 ## URL:s for calling the API:
 ### <ins>Get all Employees</ins>
@@ -77,4 +77,4 @@ Body:<br>
 }
 ```
 DELETE `https://localhost:44318/api/timereports/12`  (/api/timereports/{timereportId})
-##Reflektion(In Swedish)
+## Reflektion(In Swedish)
