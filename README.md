@@ -77,4 +77,4 @@ Body:<br>
 }
 ```
 DELETE `https://localhost:44318/api/timereports/12`  (/api/timereports/{timereportId})
-## Reflektion(In Swedish)
+## Reflection(In Swedish)
