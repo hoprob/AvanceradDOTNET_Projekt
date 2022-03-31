@@ -21,7 +21,7 @@ Body:<br>
   "phone": "0702356159"
 }
 ```
-PUT `https://localhost:44318/api/employees/8`  (/api/employees/{employeeId})
+PUT `https://localhost:44318/api/employees/8`  (/api/employees/{employeeId})<br>
 Body:<br>
 ```
 {
@@ -32,7 +32,7 @@ Body:<br>
     "phone": "0702356159"
 }
 ```
-DELETE `https://localhost:44318/api/employees/8`  (/api/employees/{employeeId})
+DELETE `https://localhost:44318/api/employees/8`  (/api/employees/{employeeId})<br>
 ### <ins>Add, Update and Delete projects</ins>
 POST `https://localhost:44318/api/projects`<br>
 Body:<br>
@@ -42,7 +42,7 @@ Body:<br>
     "projectNumber": "55-2645"
 }
 ```
-PUT `https://localhost:44318/api/projects/7`  (/api/projects/{projectId})
+PUT `https://localhost:44318/api/projects/7`  (/api/projects/{projectId})<br>
 Body:<br>
 ```
 {
@@ -64,7 +64,7 @@ Body:<br>
     "projectId": 3
 }
 ```
-PUT `https://localhost:44318/api/timereports/12`  (/api/timereports/{timereportId})
+PUT `https://localhost:44318/api/timereports/12`  (/api/timereports/{timereportId})<br>
 Body:<br>
 ```
 {
