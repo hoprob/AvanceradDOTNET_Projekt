@@ -2,7 +2,7 @@
 ## Table of contents
 * [ABOUT](#ABOUT)
 * [URL:s for calling the API](#URL:s-for-calling-the-API:)
-* [Reflection(VG-Uppgift)](Reflection(InSwedish))
+* [Reflection (VG-Uppgift)](Reflection)
 ## ABOUT
 This is the final project in a course i'm taking that's called Advanced .NET. The purpose of this project is to build a Web-API and a database so that we can use it in our next course in Webdevelopement as the Backend part.
 ## URL:s for calling the API:
@@ -81,7 +81,7 @@ Body:<br>
 }
 ```
 DELETE `https://localhost:44318/api/timereports/12`  (/api/timereports/{timereportId})
-## Reflection(InSwedish)
+## Reflection
 ### <ins>Skriva ett resonemang kring din arkitektur och dina val av tekniska metoder i din readme-fil i ditt GIT-repo. Detta resonemang ska vara nyanserat, dvs du ska resonera kring för och nackdelar med din lösning i projektet.</ins>
 Jag började projektet med att, genom kraven som fanns, modulera en databas via ett ER-diagram. Jag var först inne på att ha 4 olika tabeller, Employee, Project, EmployeeProject (Kopplingstabell) och TimeReport. Men efter övervägande så kom jag fram till att endast ha tre tabeller genom att ta bort den tilltänkta kopplingstabeller mellan Employee och Project och ersätta den med tabellen för TimeReport.
 Då jag såg att data i princip skulle upprepa sig om jag haft kvar båda tabellerna valde jag att bara ha kvar TimeReport. Jag såg också att jag kunde nyttja denna modell bättre när jag skulle anropa databasen genom EntityFramework.
