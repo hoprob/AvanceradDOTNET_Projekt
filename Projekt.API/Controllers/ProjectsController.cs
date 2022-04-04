@@ -51,7 +51,7 @@ namespace Projekt.API.Controllers
                 {
                     return NotFound($"No project with id: {id} found in database!");
                 }
-                return result;
+                return Ok(result);
             }
             catch (Exception)
             {
