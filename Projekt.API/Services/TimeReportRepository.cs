@@ -22,7 +22,8 @@ namespace Projekt.API.Services
 
         public async Task<TimeReport> DeleteAsync(int id)
         {
-            var toDelete = await _context.TimeReports.FirstOrDefaultAsync(t => t.Id == id);
+            var toDelete = await _context.TimeReports.FirstOrDefaultAsync(t =>
+            t.Id == id);
             if(toDelete != null)
             {
                 var result = _context.TimeReports.Remove(toDelete);
@@ -44,7 +45,8 @@ namespace Projekt.API.Services
 
         public async Task<TimeReport> UpdateAsync(TimeReport item)
         {
-            var toUpdate = await _context.TimeReports.FirstOrDefaultAsync(t => t.Id == item.Id);
+            var toUpdate = await _context.TimeReports.FirstOrDefaultAsync(t =>
+            t.Id == item.Id);
             if(toUpdate != null)
             {
                 toUpdate.Date = item.Date;

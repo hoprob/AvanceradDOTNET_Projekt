@@ -6,7 +6,8 @@ namespace Projekt.API.Model
 {
     public class ProjectDbContext : DbContext
     {
-        public ProjectDbContext(DbContextOptions<ProjectDbContext> options) : base(options)
+        public ProjectDbContext(DbContextOptions<ProjectDbContext> options) :
+            base(options)
         {
 
         }

@@ -1,5 +1,4 @@
 ﻿using AvanceradDOTNET_Projekt.Models;
-using System.Collections.Generic;
 using System.Threading.Tasks;
 
 namespace Projekt.API.Services

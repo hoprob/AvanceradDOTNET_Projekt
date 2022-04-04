@@ -1,6 +1,8 @@
-﻿using AvanceradDOTNET_Projekt.Models;
+﻿using AutoMapper;
+using AvanceradDOTNET_Projekt.Models;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using Projekt.API.DataTransferObjects;
 using Projekt.API.Services;
 using System;
 using System.Threading.Tasks;
@@ -13,9 +15,11 @@ namespace Projekt.API.Controllers
     public class TimeReportsController : ControllerBase
     {
         IRestAPI<TimeReport> _timeReports;
-        public TimeReportsController(IRestAPI<TimeReport> timeReports)
+        IMapper _mapper;
+        public TimeReportsController(IRestAPI<TimeReport> timeReports, IMapper mapper)
         {
             _timeReports = timeReports;
+            _mapper = mapper;
         }
         [HttpGet("{id}")]
         public async Task<ActionResult<TimeReport>> GetTimeReport(int id)
@@ -27,10 +31,12 @@ namespace Projekt.API.Controllers
                 {
                     return NotFound($"Timereport with id: {id} was not found in databse!");
                 }
-                return result;
+                var timeReportDTO = _mapper.Map<TimeReportDTO>(result);
+                return Ok(timeReportDTO);
             }catch(Exception)
             {
-                return StatusCode(StatusCodes.Status500InternalServerError, "Error connecting to database!");
+                return StatusCode(StatusCodes.Status500InternalServerError,
+                    "Error connecting to database!");
             }
         }
         [HttpPost]
@@ -43,16 +49,19 @@ namespace Projekt.API.Controllers
                     return BadRequest();
                 }
                 var newTimeReport = await _timeReports.AddAsync(timeReport);
-                return CreatedAtAction(nameof(GetTimeReport), new { id = newTimeReport.Id }, newTimeReport);
+                return CreatedAtAction(nameof(GetTimeReport)
+                    new { id = newTimeReport.Id }, newTimeReport);
             }
             catch (Exception)
             {
 
-                return StatusCode(StatusCodes.Status500InternalServerError, "Error while adding data to database!");
+                return StatusCode(StatusCodes.Status500InternalServerError,
+                    "Error while adding data to database!");
             }
         }
         [HttpPut("{id}")]
-        public async Task<ActionResult<TimeReport>> UpdateTimeReport(int id, TimeReport timeReport)
+        public async Task<ActionResult<TimeReport>> UpdateTimeReport(int id,
+            TimeReport timeReport)
         {
             try
             {
@@ -68,7 +77,8 @@ namespace Projekt.API.Controllers
                 return BadRequest("The id:s doeos not match!");
             }catch(Exception)
             {
-                return StatusCode(StatusCodes.Status500InternalServerError, "Error connecting to database!");
+                return StatusCode(StatusCodes.Status500InternalServerError,
+                    "Error connecting to database!");
             }           
         }
         [HttpDelete("{id}")]
@@ -86,7 +96,8 @@ namespace Projekt.API.Controllers
             }
             catch (Exception)
             {
-                return StatusCode(StatusCodes.Status500InternalServerError, "Error connecting to database!");
+                return StatusCode(StatusCodes.Status500InternalServerError,
+                    "Error connecting to database!");
             }
         }
     }

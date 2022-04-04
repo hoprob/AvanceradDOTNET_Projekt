@@ -23,7 +23,8 @@ namespace Projekt.API.Services
 
         public async Task<Project> DeleteAsync(int id)
         {
-            var toDelete = await _context.Projects.FirstOrDefaultAsync(prop => prop.Id == id);
+            var toDelete = await _context.Projects.FirstOrDefaultAsync(prop =>
+            prop.Id == id);
             if(toDelete != null)
             {
                 var result = _context.Projects.Remove(toDelete);
@@ -40,9 +41,9 @@ namespace Projekt.API.Services
 
         public async Task<IEnumerable<Employee>> GetEmployeesInProjectAsync(int id)
         {
-            //var result = await _context.Projects.Include(t => t.TimeReports).ThenInclude(e => e.Employee).Distinct().Where(p => p.Id == id).ToListAsync();
-            var result = await _context.Projects.Join(_context.TimeReports, p => p.Id, t => t.ProjectId,
-                (p, t) => new { p, t }).Where(p => p.p.Id == id).Select(e => e.t.Employee).Distinct().ToListAsync();
+            var result = await  (_context.Employees.SelectMany(emp =>
+            emp.TimeReports, (emp, time) => new { emp, time }).Where(p =>
+            p.time.ProjectId == id).Select(e => e.emp)).Distinct().ToListAsync();
             return result;
         }
 
@@ -53,7 +54,8 @@ namespace Projekt.API.Services
 
         public async Task<Project> UpdateAsync(Project item)
         {
-            var toUpdate = await _context.Projects.FirstOrDefaultAsync(p => p.Id == item.Id);
+            var toUpdate = await _context.Projects.FirstOrDefaultAsync(p =>
+            p.Id == item.Id);
             if(toUpdate != null)
             {
                 toUpdate.ProjectName = item.ProjectName;

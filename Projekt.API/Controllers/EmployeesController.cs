@@ -1,9 +1,11 @@
-﻿using AvanceradDOTNET_Projekt.Models;
+﻿using AutoMapper;
+using AvanceradDOTNET_Projekt.Models;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using Projekt.API.DataTransferObjects;
 using Projekt.API.Services;
 using System;
-using System.Linq;
+using System.Collections.Generic;
 using System.Threading.Tasks;
 
 namespace Projekt.API.Controllers
@@ -13,20 +15,25 @@ namespace Projekt.API.Controllers
     public class EmployeesController : ControllerBase
     {
         IEmployee _employees;
-        public EmployeesController(IEmployee employees)
+        IMapper _mapper;
+        public EmployeesController(IEmployee employees, IMapper mapper)
         {
             _employees = employees;
+            _mapper = mapper;
         }
         [HttpGet]
         public async Task<ActionResult> GetAllEmployees()
         {
             try
             {
-                return Ok(await _employees.GetAllAsync());               
+                var employees = await _employees.GetAllAsync();
+                var employeesDTO = _mapper.Map<List<EmployeeDTO>>(employees);
+                return Ok(employeesDTO);               
             }
             catch (Exception)
             {
-                return StatusCode(StatusCodes.Status500InternalServerError, "Error connecting to database!");
+                return StatusCode(StatusCodes.Status500InternalServerError,
+                    "Error connecting to database!");
             }
         }
         [HttpGet("{id}")]
@@ -37,13 +44,15 @@ namespace Projekt.API.Controllers
                 var result = await _employees.GetSingleAsync(id);
                 if(result != null)
                 {
-                    return Ok(result);
+                    var employeeDTO = _mapper.Map<EmployeeDTO>(result);
+                    return Ok(employeeDTO);
                 }
                 return NotFound($"Employee with id: {id} was not found in database!");
             }
             catch (Exception)
             {
-                return StatusCode(StatusCodes.Status500InternalServerError, "Error connecting to database!");
+                return StatusCode(StatusCodes.Status500InternalServerError,
+                    "Error connecting to database!");
             }
         }
 
@@ -57,14 +66,16 @@ namespace Projekt.API.Controllers
                 if(inDb != null)
                 {
                     var result = await _employees.GetTimeReportsByEmployeeAsync(id);
-                    return Ok(result);
+                    var resultDTO = _mapper.Map<EmployeeTimeReportsDTO>(result);
+                    return Ok(resultDTO);
                 }
                 return NotFound($"Employee with id: {id} was not found in database!");
                 
             }
             catch (Exception)
             {
-                return StatusCode(StatusCodes.Status500InternalServerError, "Error connecting to database!");
+                return StatusCode(StatusCodes.Status500InternalServerError,
+                    "Error connecting to database!");
             }
         }
         [HttpGet]
@@ -82,11 +93,13 @@ namespace Projekt.API.Controllers
                     }
                     return NotFound($"Employee with id: {id} was not found in database!");
                 }
-                return BadRequest($"{week} is not a valis weeknumber! Enter a number between 1 and 52!");
+                return BadRequest($"{week} is not a valis weeknumber!" +
+                    $" Enter a number between 1 and 52!");
             }
             catch (Exception)
             {
-                return StatusCode(StatusCodes.Status500InternalServerError, "Error connecting to database!");
+                return StatusCode(StatusCodes.Status500InternalServerError,
+                    "Error connecting to database!");
             }
         }
         [HttpPost]
@@ -97,17 +110,20 @@ namespace Projekt.API.Controllers
                 if(employee != null)
                 {
                     var result = await _employees.AddAsync(employee);
-                    return CreatedAtAction(nameof(GetEmployee), new { id = result.Id }, result);
+                    return CreatedAtAction(nameof(GetEmployee),
+                        new { id = result.Id }, result);
                 }
                 return BadRequest();
             }
             catch (Exception)
             {
-                return StatusCode(StatusCodes.Status500InternalServerError, "Error connecting to database!");
+                return StatusCode(StatusCodes.Status500InternalServerError,
+                    "Error connecting to database!");
             }
         }
         [HttpPut("{id}")]
-        public async Task<ActionResult<Employee>> UpdateEmployee(int id, Employee employee)
+        public async Task<ActionResult<Employee>> UpdateEmployee(int id,
+            Employee employee)
         {
             try
             {
@@ -124,7 +140,8 @@ namespace Projekt.API.Controllers
             }
             catch (Exception)
             {
-                return StatusCode(StatusCodes.Status500InternalServerError, "Error connecting to database!");
+                return StatusCode(StatusCodes.Status500InternalServerError,
+                    "Error connecting to database!");
             }
         }
         [HttpDelete("{id}")]
@@ -141,7 +158,8 @@ namespace Projekt.API.Controllers
             }
             catch (Exception)
             {
-                return StatusCode(StatusCodes.Status500InternalServerError, "Error connecting to database!");
+                return StatusCode(StatusCodes.Status500InternalServerError,
+                    "Error connecting to database!");
             }
         }
     }

@@ -1,6 +1,8 @@
-﻿using AvanceradDOTNET_Projekt.Models;
+﻿using AutoMapper;
+using AvanceradDOTNET_Projekt.Models;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using Projekt.API.DataTransferObjects;
 using Projekt.API.Services;
 using System;
 using System.Collections.Generic;
@@ -14,9 +16,11 @@ namespace Projekt.API.Controllers
     public class ProjectsController : ControllerBase
     {
         IProject _projects;
-        public ProjectsController(IProject projects)
+        IMapper _mapper;
+        public ProjectsController(IProject projects, IMapper mapper)
         {
             _projects = projects;
+            _mapper = mapper;
         }
         [HttpGet]
         [Route("{id}/employees")]
@@ -30,7 +34,8 @@ namespace Projekt.API.Controllers
                     var result = await _projects.GetEmployeesInProjectAsync(id);
                     if (result != null && result.Any())
                     {
-                        return Ok(result);
+                        var employeesDTO = _mapper.Map<List<EmployeeDTO>>(result);
+                        return Ok(employeesDTO);
                     }
                     return NotFound($"No employees found in project with id: {id}");
                 }
@@ -38,7 +43,8 @@ namespace Projekt.API.Controllers
             }
             catch (Exception)
             {
-                return StatusCode(StatusCodes.Status500InternalServerError, "Error connecting to database!");
+                return StatusCode(StatusCodes.Status500InternalServerError,
+                    "Error connecting to database!");
             }
         }
         [HttpGet("{id}")]
@@ -51,11 +57,13 @@ namespace Projekt.API.Controllers
                 {
                     return NotFound($"No project with id: {id} found in database!");
                 }
-                return Ok(result);
+                var projectDTO = _mapper.Map<ProjectDTO>(result);
+                return Ok(projectDTO);
             }
             catch (Exception)
             {
-                return StatusCode(StatusCodes.Status500InternalServerError, "Error connecting to database!");
+                return StatusCode(StatusCodes.Status500InternalServerError,
+                    "Error connecting to database!");
             }
         }
         [HttpPost]
@@ -72,7 +80,8 @@ namespace Projekt.API.Controllers
             }
             catch (Exception)
             {
-                return StatusCode(StatusCodes.Status500InternalServerError, "Error adding project to database!");
+                return StatusCode(StatusCodes.Status500InternalServerError,
+                    "Error adding project to database!");
             }
         }
         [HttpPut("{id}")]
@@ -92,7 +101,8 @@ namespace Projekt.API.Controllers
                 return BadRequest("The id:s doeos not match!");
             }catch(Exception)
             {
-                return StatusCode(StatusCodes.Status500InternalServerError, "Error connecting to database!");
+                return StatusCode(StatusCodes.Status500InternalServerError,
+                    "Error connecting to database!");
             }          
         }
         [HttpDelete("{id}")]
@@ -109,7 +119,8 @@ namespace Projekt.API.Controllers
             }
             catch (Exception)
             {
-                return StatusCode(StatusCodes.Status500InternalServerError, "Error connecting to database!");
+                return StatusCode(StatusCodes.Status500InternalServerError,
+                    "Error connecting to database!");
             }
         }
     }
