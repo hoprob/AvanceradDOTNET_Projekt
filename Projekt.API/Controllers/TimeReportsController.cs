@@ -49,7 +49,7 @@ namespace Projekt.API.Controllers
                     return BadRequest();
                 }
                 var newTimeReport = await _timeReports.AddAsync(timeReport);
-                return CreatedAtAction(nameof(GetTimeReport)
+                return CreatedAtAction(nameof(GetTimeReport),
                     new { id = newTimeReport.Id }, newTimeReport);
             }
             catch (Exception)
