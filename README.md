@@ -3,6 +3,7 @@
 * [ABOUT](#ABOUT)
 * [URL:s for calling the API](#URL:s-for-calling-the-API:)
 * [Reflection (VG-Uppgift)](#Reflection)
+* [ER-Model](#ER-Model)
 ## ABOUT
 This is the final project in a course i'm taking that's called Advanced .NET. The purpose of this project is to build a Web-API and a database so that we can use it in our next course in Webdevelopement as the Backend part.
 ## URL:s for calling the API:
@@ -108,4 +109,5 @@ Jag tycker att detta blir tydligt vad som behöver in i requesten, men det kan o
 
 Överlag är jag nöjd med mitt projekt och jag tycker att det har en tydlighet vilket gör att det är lättare att bygga på i framtiden. Jag har också försökt hålla en kontinuitet i hur API:et skall anropas vilket jag hoppas bidrar till att et blir enklare för front-end sidan att använda.
 
+## ER-Model
 ![ER-Diagram](ER.jpeg)
