@@ -15,6 +15,7 @@ namespace AvanceradDOTNET_Projekt.Models
         public int Week { get => CultureInfo.InvariantCulture.Calendar.
                 GetWeekOfYear(Date, CalendarWeekRule.FirstFullWeek, DayOfWeek.Monday);}
         [Required]
+        [Range(0, 24, ErrorMessage = "Worked hours must be in range 0-24!")]
         public double HoursWorked { get; set; }
         [Required]
         public int EmployeeId { get; set; }
