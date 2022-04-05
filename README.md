@@ -108,4 +108,4 @@ Jag tycker att detta blir tydligt vad som behöver in i requesten, men det kan o
 
 Överlag är jag nöjd med mitt projekt och jag tycker att det har en tydlighet vilket gör att det är lättare att bygga på i framtiden. Jag har också försökt hålla en kontinuitet i hur API:et skall anropas vilket jag hoppas bidrar till att et blir enklare för front-end sidan att använda.
 
-![ER-Diagram](Avancerad-.NET-Projekt.jpeg)
+![ER-Diagram](ER.jpeg)
